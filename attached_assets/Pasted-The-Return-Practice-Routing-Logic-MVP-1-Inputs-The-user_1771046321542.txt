@@ -1,0 +1,151 @@
+The Return — Practice Routing Logic (MVP)
+1. Inputs
+The user completes a check-in using 4 sliders.
+The UI presents 5 positions per slider.
+ Internally each position maps to a numeric value:
+UI Position
+Internal Value
+Far Left
+0
+Left
+25
+Middle
+50
+Right
+75
+Far Right
+100
+
+Slider meanings
+Slider
+Left
+Right
+Variable Name
+Grounded ↔ Scattered
+Grounded
+Scattered
+scattered
+Calm ↔ Anxious
+Calm
+Anxious
+anxious
+Present ↔ In my head
+Present
+In my head
+inHead
+Energized ↔ Exhausted
+Energized
+Exhausted
+exhausted
+
+Higher numbers always indicate greater dysregulation on that axis.
+
+2. Practice Types (Outputs)
+The routing engine selects one of four practice categories:
+Calm → reduce nervous system activation (slow mind & body)
+
+
+Ground → shift awareness from thinking into body
+
+
+Activate → restore energy and engagement
+
+
+Deep Rest → parasympathetic downshift (tired but wired)
+
+
+
+3. Overrides (evaluated first)
+These ensure obvious states are handled correctly before scoring.
+Override A — High Anxiety
+If:
+ anxious ≥ 75
+→ Serve CALM
+(When strongly anxious, always down-regulate first.)
+
+Override B — Tired but Wired (Deep Rest)
+If:
+ exhausted ≥ 75 AND anxious ≤ 60
+→ Serve DEEP REST
+(This captures morning exhaustion and late-night wired fatigue.)
+
+Override C — Strong Rumination
+If:
+ inHead ≥ 80 AND anxious ≤ 65
+→ Serve GROUND
+(Rumination responds better to body awareness than calming.)
+
+4. Scoring (used if no override triggered)
+Each category receives a weighted score.
+Calm Score
+Best for mental over-activation.
+calm = 0.50*anxious
+     + 0.25*scattered
+     + 0.15*inHead
+     + 0.10*exhausted
+
+
+Ground Score
+Best for rumination and cognitive looping.
+ground = 0.55*inHead
+       + 0.25*scattered
+       + 0.10*anxious
+       + 0.10*exhausted
+
+
+Activate Score
+Best for low energy, stuckness, disengagement.
+ (We reward exhaustion and low anxiety.)
+activate = 0.70*exhausted
+         + 0.20*scattered
+         - 0.30*anxious
+         + 0.10*(100 - inHead)
+
+
+Deep Rest Score
+Best for exhausted but not highly anxious states.
+deepRest = 0.75*exhausted
+         + 0.25*(100 - anxious)
+
+
+5. Final Selection
+If no override was triggered:
+Select the practice category with the highest score.
+Serve the corresponding guided audio.
+
+6. AI Layer (Important)
+The AI does not choose the practice.
+The routing engine selects the category.
+The AI’s role is only to:
+ • acknowledge the state
+ • explain the recommendation
+ • guide the user into the practice in Kyle’s tone
+Example:
+“Your mind is still active while your body is tired.
+ Instead of pushing forward, let’s help your system fully downshift for a few minutes.”
+
+
+We add a “Guidance Screen” (2–3 seconds before audio)
+After routing selects Calm / Ground / Activate / Deep Rest, the user sees a short message before the audio starts.
+Not a paragraph.
+Two sentences max.
+This is the moment the app feels attuned.
+
+Example outputs (copy/paste spec)
+If CALM was selected
+Your mind looks active and your body hasn’t settled yet.
+ Let’s slow things down together for a few minutes.
+
+If GROUND was selected
+You’ve been in your head for a while.
+ We’ll bring your attention back into your body.
+
+If ACTIVATE was selected
+Your system seems low on energy right now.
+ Instead of pushing through, let’s wake it up gently.
+
+If DEEP REST was selected
+Your body is tired but your system hasn’t fully downshifted.
+ Let’s allow it to truly rest.
+(Then: audio automatically begins.)
+

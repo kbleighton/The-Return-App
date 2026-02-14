@@ -1,0 +1,248 @@
+The Return - Breathwork and Grounding Guidance
+
+Primary promise (functional):
+Calm your mind and body in under 5 minutes.
+Secondary meaning (identity):
+Come back to yourself — and move with intention.
+
+
+First Launch (one time only)
+Launch / Splash screen (2–3 seconds)
+This is not a loading screen.
+This is a nervous-system cue.
+Keep it extremely simple:
+dark forest green background
+
+
+root/trunk icon
+
+
+text:
+
+
+The Return
+and underneath in small type:
+Calm your mind and body in under 5 minutes.
+No buttons.
+No movement except a subtle fade.
+Why it matters:
+You are already conditioning regulation before they even interact.
+
+Welcome Screen
+Title
+Welcome to The Return
+Body text
+At the end of the day, your body arrives home before your mind does.
+Most of us move straight from the noise of the day into distraction — scrolling, thinking, or staying tense without realizing it.
+The Return is a simple daily check-in you can use when you get home, before bed, or anytime you want to pause and orient yourself.
+In just a few minutes, you can calm your mind and body — and move into the next part of your day with intention instead of momentum.
+
+Button
+Start my first check-in
+
+Screen 2 — Personalization
+Title
+When do you most want support?
+Subtitle
+Choose the moments where it would help to pause and come back to yourself.
+Options (select up to 2)
+After my day ends
+
+
+When my mind won’t stop thinking
+
+
+After a stressful interaction
+
+
+Before sleep
+
+
+When I feel stuck or unmotivated
+
+
+When starting my day
+
+
+(This will later determine suggested practices AND notification timing.)
+Button:
+Continue
+
+Screen 3 — Recognition
+Title
+What usually happens instead?
+Subtitle
+When you don’t pause, what do you notice you tend to do?
+Options
+I scroll my phone
+
+
+I overthink
+
+
+I shut down or withdraw
+
+
+I distract myself
+
+
+I react quickly
+
+
+I avoid what I need to do
+
+
+Button:
+Continue
+
+Screen 4 — Now you ask for account
+(Only now — because they’re invested.)
+Very simple:
+Create account to save your check-ins and continue your practice.
+Options:
+Continue with Apple
+
+
+Continue with Google
+
+
+Email
+
+
+
+Screen 5 — First Check-In (the real start of the app)
+This is the most important interaction in the entire product.
+Title
+How are you arriving right now?
+(Important: not “How are you feeling?” — that causes overthinking and emotional analysis.)
+Sliders
+Grounded ↔ Scattered
+Calm ↔ Anxious
+Present ↔ In my head
+Open ↔ Heavy
+Button:
+Let’s begin
+After they press it → the app immediately recommends a 3–4 minute practice.
+No menus.
+No library browsing.
+Immediate guidance.
+
+POST-PRACTICE FLOW (COPY/PASTE)
+Screen PP-1 — Integration Pause
+Title:
+Take a moment.
+Body text:
+Before moving on, notice what feels different right now.
+No need to analyze it.
+Just take one breath and observe.
+(3–5 second delay before options appear)
+
+Screen PP-2 — State Recognition
+Question:
+How do you feel now?
+Options (single select):
+Grounded
+
+
+Clear
+
+
+About the same
+
+
+Still tense
+
+
+(User must select one to continue)
+
+Screen PP-3 — Orientation
+Title:
+Carry this into what comes next.
+Prompt:
+What is one small thing you want to move into next with intention?
+Optional examples (tap or skip):
+Send a message I’ve been avoiding
+
+
+Start a task
+
+
+Have a conversation calmly
+
+
+Rest intentionally
+
+
+Step outside
+
+
+Go to sleep
+
+
+Button:
+Continue
+
+Screen PP-4 — Closure
+Message:
+You can return anytime today.
+(Auto-return to Home / Check-In screen after 2–3 seconds or tap to continue)
+
+
+
+The Return — Home Screen (MVP Layout)
+There is only one primary function.
+What the user sees every time they open the app
+Top (very minimal)
+small tree/root icon
+
+
+“The Return”
+
+
+optional subtle line:
+
+ Powered by Embodied Brotherhood
+
+
+(no menus, no profile picture, no notifications bell)
+
+Center (the actual Home screen)
+Large text:
+How are you arriving right now?
+Underneath:
+Take a second. There’s nothing to solve — just notice.
+Then the sliders.
+
+The Check-In (this IS the home screen)
+Use 4 sliders exactly:
+• Grounded ↔ Scattered
+• Calm ↔ Anxious
+• Present ↔ In my head
+• Energized ↔ Exhausted
+
+Primary Button
+Large centered button:
+Let’s begin
+When tapped → the app selects the appropriate practice automatically.
+The user does NOT choose a session.
+After the practice
+They go through the post-practice flow we wrote:
+notice → state recognition → intentional next action → return to home.
+Now the Home screen has meaning.
+It’s no longer a menu.
+It’s a doorway.
+Where the other features go
+You can have a very small bottom tab bar (later, not required for first test):
+Check-In (default)
+
+
+Practices (manual library)
+
+
+Journal
+
+
+But even then:
+the app should always open back into Check-In.
+Because the behavior you are installing is:
+“when I need to reset or engage, I open this and it guides me.”
