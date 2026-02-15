@@ -35,7 +35,8 @@ export const insertCheckinSchema = createInsertSchema(checkins).omit({
   userId: true,
   postFeeling: true,
   intention: true,
-  completedAt: true
+  completedAt: true,
+  recommendedPractice: true
 });
 
 export const updateCheckinSchema = createInsertSchema(checkins).pick({
