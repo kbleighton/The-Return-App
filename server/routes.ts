@@ -75,7 +75,7 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   // Setup Auth
-  await setupAuth(app);
+  // await setupAuth(app);
   registerAuthRoutes(app);
 
   // API Routes
