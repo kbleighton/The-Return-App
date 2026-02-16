@@ -175,7 +175,7 @@ function AuthScreen() {
         <div className="space-y-4 w-full max-w-sm mx-auto">
           <a href="/api/login" className="block w-full">
             <Button size="lg" className="w-full bg-white text-black hover:bg-white/90">
-              Continue without Account
+              Continue with Replit
             </Button>
           </a>
           <p className="text-xs text-muted-foreground/60">
