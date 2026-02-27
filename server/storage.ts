@@ -1,9 +1,36 @@
 import { db } from "./db";
 import { checkins, type Checkin, type InsertCheckin, type CompleteCheckinRequest } from "@shared/schema";
+import { users, type User, type UpsertUser } from "@shared/models/auth";
 import { eq, desc } from "drizzle-orm";
-import { authStorage, type IAuthStorage } from "./replit_integrations/auth";
 
-export interface IStorage extends IAuthStorage {
+// User storage operations (moved from Replit auth)
+class UserStorage {
+  async getUser(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
+  }
+}
+
+const userStorage = new UserStorage();
+
+export interface IStorage {
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
   createCheckin(checkin: InsertCheckin): Promise<Checkin>;
   completeCheckin(id: number, updates: CompleteCheckinRequest): Promise<Checkin>;
   getCheckins(userId: string): Promise<Checkin[]>;
@@ -12,9 +39,9 @@ export interface IStorage extends IAuthStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  // Auth methods delegated to authStorage
-  getUser = authStorage.getUser.bind(authStorage);
-  upsertUser = authStorage.upsertUser.bind(authStorage);
+  // Delegate auth methods
+  getUser = userStorage.getUser.bind(userStorage);
+  upsertUser = userStorage.upsertUser.bind(userStorage);
 
   async createCheckin(checkin: InsertCheckin): Promise<Checkin> {
     const [newCheckin] = await db
@@ -43,7 +70,7 @@ export class DatabaseStorage implements IStorage {
       .where(eq(checkins.userId, userId))
       .orderBy(desc(checkins.createdAt));
   }
-  
+
   async getLastCheckin(userId: string): Promise<Checkin | undefined> {
     const [checkin] = await db
       .select()
@@ -64,3 +91,4 @@ export class DatabaseStorage implements IStorage {
 }
 
 export const storage = new DatabaseStorage();
+export const authStorage = userStorage;

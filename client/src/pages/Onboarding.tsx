@@ -4,6 +4,7 @@ import { Layout, PageTransition } from "@/components/Layout";
 import { Button } from "@/components/Button";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Check } from "lucide-react";
+import { SignIn } from "@clerk/clerk-react";
 
 // === STEP 1: WELCOME ===
 function Welcome({ onNext }: { onNext: () => void }) {
@@ -172,15 +173,18 @@ function AuthScreen() {
           </p>
         </div>
 
-        <div className="space-y-4 w-full max-w-sm mx-auto">
-          <a href="/api/login" className="block w-full">
-            <Button size="lg" className="w-full bg-white text-black hover:bg-white/90">
-              Continue with Replit
-            </Button>
-          </a>
-          <p className="text-xs text-muted-foreground/60">
-            By continuing, you agree to our Terms and Privacy Policy.
-          </p>
+        <div className="flex justify-center w-full">
+          <SignIn
+            routing="hash"
+            signUpUrl="/welcome#/sign-up"
+            afterSignInUrl="/"
+            appearance={{
+              elements: {
+                rootBox: "mx-auto",
+                card: "bg-card shadow-lg",
+              },
+            }}
+          />
         </div>
       </div>
     </PageTransition>

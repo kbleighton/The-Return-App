@@ -3,7 +3,7 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
-import { setupAuth, registerAuthRoutes, isAuthenticated } from "./replit_integrations/auth";
+import { requireAuth, getCurrentUserId } from "./auth";
 import { type InsertCheckin } from "@shared/schema";
 
 // Helper for Practice Routing Logic
@@ -74,17 +74,30 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Setup Auth
-  // await setupAuth(app);
-  registerAuthRoutes(app);
-
   // API Routes
+
+  // GET /api/auth/user - Get current user
+  app.get("/api/auth/user", requireAuth, async (req: any, res) => {
+    try {
+      const userId = getCurrentUserId(req);
+      const user = await storage.getUser(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
   
   // POST /api/checkins - Create check-in and get recommendation
-  app.post(api.checkins.create.path, isAuthenticated, async (req, res) => {
+  app.post(api.checkins.create.path, requireAuth, async (req, res) => {
     try {
       const input = api.checkins.create.input.parse(req.body);
-      const userId = (req.user as any).claims.sub; // From Replit Auth
+      const userId = getCurrentUserId(req); // From Replit Auth
       
       // Calculate practice
       const recommendedPractice = calculatePractice(
@@ -114,11 +127,11 @@ export async function registerRoutes(
   });
 
   // PATCH /api/checkins/:id/complete - Update with post-practice integration
-  app.patch(api.checkins.complete.path, isAuthenticated, async (req, res) => {
+  app.patch(api.checkins.complete.path, requireAuth, async (req, res) => {
     try {
       const id = Number(req.params.id);
       const input = api.checkins.complete.input.parse(req.body);
-      const userId = (req.user as any).claims.sub;
+      const userId = getCurrentUserId(req);
 
       const existing = await storage.getCheckin(id);
       if (!existing) {
@@ -143,15 +156,15 @@ export async function registerRoutes(
   });
 
   // GET /api/checkins - List user check-ins
-  app.get(api.checkins.list.path, isAuthenticated, async (req, res) => {
-    const userId = (req.user as any).claims.sub;
+  app.get(api.checkins.list.path, requireAuth, async (req, res) => {
+    const userId = getCurrentUserId(req);
     const checkins = await storage.getCheckins(userId);
     res.json(checkins);
   });
   
   // GET /api/checkins/last - Get last checkin
-  app.get(api.checkins.getLast.path, isAuthenticated, async (req, res) => {
-    const userId = (req.user as any).claims.sub;
+  app.get(api.checkins.getLast.path, requireAuth, async (req, res) => {
+    const userId = getCurrentUserId(req);
     const checkin = await storage.getLastCheckin(userId);
     res.json(checkin || null);
   });
